@@ -1,0 +1,6 @@
+.editorconfig
+node_modules
+*.log
+*.md
+.vscode
+dist

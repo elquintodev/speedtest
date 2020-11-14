@@ -1,0 +1,44 @@
+version: "3"
+services: 
+  speedtest-db: 
+    image: speedtest-db:0.0.0
+    container_name: speedtest-db
+    build: ./speedtest-db
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    volumes: 
+      - ./speedtest-db/db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+  speedtest-api:
+    image: speedtest-api:0.0.0
+    container_name: speedtest-api
+    build:
+      context: ./speedtest-api
+      args:
+        uid: ${UID}
+    environment:
+      - APACHE_RUN_USER=#${UID}
+      - APACHE-RUN_GROUP=#${UID}
+    restart: unless-stopped
+    volumes:
+      - ./speedtest-api/src:/var/www/html
+      - ./speedtest-api/apache_log:/var/log/apache2
+    ports:
+      - 80:80
+    depends_on:
+      - speedtest-db
+    links:
+      - speedtest-db
+  speedtest-client:
+    image: speedtest-client:0.0.0
+    container_name: speedtest-client
+    build: ./speedtest-client
+    volumes:
+        - './speedtest-client/src:/speedtest-client/src' 
+    ports: 
+        - '4200:4200'
+    command: npm start

@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg fixed-top shadow navbar-dark bg-primary">
+  <a class="navbar-brand" [routerLink]="['/']" routerLinkActive="router-link-active">
+    <fa-icon [icon]="faTachometerAlt"></fa-icon> Speed Test</a>
+</nav>
+<div class="main-container">
+  <div class="row justify-content-md-center mb-3">
+    <div class="col-md-8">
+      <div class="row mb-3">
+        <div class="col">
+          <app-test-result [type]="'Download Speed'" [icon]="faDownload" [loading]="loading" [speed]="downloadSpeed"></app-test-result>
+        </div>
+        <div class="col">
+          <app-test-result [type]="'Upload Speed'" [icon]="faUpload" [loading]="loading" [speed]="uploadSpeed"></app-test-result>
+        </div>
+      </div>
+      <button class="btn btn-info btn-lg btn-block" (click)="onStartClick()">
+        <fa-icon [icon]="faRunning"></fa-icon> Start</button>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-md-8">
+      <div class="mb-2">
+        <a href="javascript:void(0)" (click)="onRefreshClick()">
+          <fa-icon [icon]="faSync"></fa-icon> refresh</a>
+      </div>
+      <app-test-result-data-table [testResults]="testResults"></app-test-result-data-table>
+    </div>
+  </div>
+</div>
+<footer class="text-center pb-3">
+  <span class="text-muted">El Quinto <fa-icon [icon]="faCopyright"></fa-icon> {{today | date: 'yyyy'}}</span>
+</footer>

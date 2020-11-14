@@ -1,0 +1,11 @@
+<div class="card text-center">
+    <div class="card-header">
+        <fa-icon [icon]="icon"></fa-icon> {{type}}
+    </div>
+    <div class="card-body">
+        <h2 class="card-title" *ngIf="!loading">{{speed}}<br>mbps</h2>
+        <div class="spinner-border" role="status" *ngIf="loading">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
